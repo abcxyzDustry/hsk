@@ -1,0 +1,2035 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>汉语学习 · Học Tiếng Trung</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;700&family=Noto+Sans+SC:wght@300;400;500&family=Ma+Shan+Zheng&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1208;
+    --ink2: #2d1f0a;
+    --paper: #f5ede0;
+    --paper2: #ede0cc;
+    --paper3: #e0cfb4;
+    --red: #c0392b;
+    --red2: #e74c3c;
+    --gold: #c9942a;
+    --gold2: #f0c040;
+    --jade: #2d7a5a;
+    --jade2: #3aaa7a;
+    --muted: #8a7060;
+    --shadow: rgba(26,18,8,0.18);
+    --border: rgba(26,18,8,0.12);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans SC', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+    overflow-x: hidden;
+    background-image:
+      radial-gradient(ellipse at 20% 50%, rgba(192,57,43,0.04) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(201,148,42,0.06) 0%, transparent 50%);
+  }
+
+  /* ========== LAYOUT ========== */
+  .app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  /* ========== HEADER ========== */
+  header {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 0 32px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 3px solid var(--gold);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 20px var(--shadow);
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .logo-char {
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 36px;
+    color: var(--gold2);
+    line-height: 1;
+    text-shadow: 0 0 20px rgba(240,192,64,0.5);
+  }
+
+  .logo-text {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .logo-text strong {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 18px;
+    letter-spacing: 2px;
+    color: var(--paper);
+  }
+
+  .logo-text span {
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .hsk-tabs {
+    display: flex;
+    gap: 4px;
+  }
+
+  .hsk-tab {
+    padding: 6px 14px;
+    border: 1px solid rgba(240,192,64,0.3);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--paper);
+    background: transparent;
+    transition: all 0.2s;
+    letter-spacing: 0.5px;
+  }
+
+  .hsk-tab:hover { background: rgba(240,192,64,0.15); }
+  .hsk-tab.active {
+    background: var(--gold);
+    color: var(--ink);
+    border-color: var(--gold);
+    font-weight: 700;
+  }
+
+  .user-stats {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .stat-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+
+  .stat-badge .val {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 20px;
+    color: var(--gold2);
+    line-height: 1;
+    font-weight: 700;
+  }
+
+  .stat-badge .lbl {
+    font-size: 10px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* ========== MAIN ========== */
+  .main {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 260px 1fr 280px;
+    gap: 0;
+    max-height: calc(100vh - 64px);
+  }
+
+  /* ========== SIDEBAR LEFT ========== */
+  .sidebar-left {
+    background: var(--ink2);
+    padding: 24px 0;
+    overflow-y: auto;
+    border-right: 1px solid rgba(240,192,64,0.15);
+  }
+
+  .section-label {
+    padding: 8px 20px 6px;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    opacity: 0.7;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 20px;
+    cursor: pointer;
+    color: rgba(245,237,224,0.7);
+    font-size: 14px;
+    transition: all 0.2s;
+    border-left: 3px solid transparent;
+  }
+
+  .nav-item:hover {
+    background: rgba(240,192,64,0.08);
+    color: var(--paper);
+  }
+
+  .nav-item.active {
+    background: rgba(240,192,64,0.1);
+    color: var(--gold2);
+    border-left-color: var(--gold);
+  }
+
+  .nav-item .icon {
+    font-size: 18px;
+    width: 22px;
+    text-align: center;
+  }
+
+  .word-list-section {
+    padding: 12px 0;
+    border-top: 1px solid rgba(240,192,64,0.1);
+    margin-top: 12px;
+  }
+
+  .word-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 20px;
+    cursor: pointer;
+    transition: background 0.15s;
+    border-left: 3px solid transparent;
+  }
+
+  .word-item:hover { background: rgba(240,192,64,0.07); }
+  .word-item.active-word {
+    background: rgba(192,57,43,0.15);
+    border-left-color: var(--red);
+  }
+
+  .word-item .hanzi {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 20px;
+    color: var(--paper);
+  }
+
+  .word-item .info {
+    text-align: right;
+  }
+
+  .word-item .pinyin {
+    font-size: 11px;
+    color: var(--gold);
+    display: block;
+  }
+
+  .word-item .meaning-short {
+    font-size: 11px;
+    color: rgba(245,237,224,0.5);
+    display: block;
+    max-width: 90px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .word-status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    margin-left: 6px;
+  }
+
+  .dot-new { background: var(--muted); }
+  .dot-learning { background: var(--gold); }
+  .dot-known { background: var(--jade2); }
+
+  /* ========== CENTER PANEL ========== */
+  .center {
+    overflow-y: auto;
+    padding: 32px;
+    background: var(--paper);
+  }
+
+  /* === FLASHCARD === */
+  .flashcard-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+  }
+
+  .progress-bar-wrap {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .progress-bar {
+    flex: 1;
+    height: 6px;
+    background: var(--paper3);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold), var(--red));
+    border-radius: 3px;
+    transition: width 0.4s ease;
+  }
+
+  .progress-text {
+    font-size: 12px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  .flashcard {
+    width: 100%;
+    max-width: 600px;
+    min-height: 340px;
+    background: #fffdf8;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    box-shadow:
+      0 2px 4px var(--shadow),
+      0 8px 32px rgba(26,18,8,0.08),
+      inset 0 0 60px rgba(201,148,42,0.03);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.15s, box-shadow 0.15s;
+    padding: 40px 32px;
+  }
+
+  .flashcard:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 40px rgba(26,18,8,0.14);
+  }
+
+  .flashcard::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--red), var(--gold));
+  }
+
+  .flashcard .corner-deco {
+    position: absolute;
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 80px;
+    color: rgba(201,148,42,0.06);
+    line-height: 1;
+  }
+  .flashcard .corner-deco.tl { top: -10px; left: 10px; }
+  .flashcard .corner-deco.br { bottom: -10px; right: 10px; }
+
+  .card-hsk-badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    padding: 3px 10px;
+    background: var(--ink);
+    color: var(--gold2);
+    font-size: 11px;
+    font-weight: 700;
+    border-radius: 2px;
+    letter-spacing: 1px;
+  }
+
+  .card-type-badge {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    padding: 3px 10px;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .main-hanzi {
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 96px;
+    line-height: 1;
+    color: var(--ink);
+    text-align: center;
+    text-shadow: 2px 3px 0 rgba(26,18,8,0.08);
+    position: relative;
+    z-index: 1;
+  }
+
+  .card-pinyin {
+    font-family: 'Crimson Pro', serif;
+    font-size: 28px;
+    color: var(--red);
+    letter-spacing: 2px;
+    margin-top: 8px;
+    font-style: italic;
+    position: relative;
+    z-index: 1;
+  }
+
+  .card-hint {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 16px;
+    font-style: italic;
+    position: relative;
+    z-index: 1;
+  }
+
+  .card-back {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+  }
+
+  .card-back.visible { display: flex; }
+
+  .meaning-vn {
+    font-size: 26px;
+    font-weight: 500;
+    color: var(--ink);
+    text-align: center;
+  }
+
+  .meaning-example {
+    font-size: 15px;
+    color: var(--ink2);
+    text-align: center;
+    font-family: 'Noto Serif SC', serif;
+    line-height: 1.8;
+    border-left: 3px solid var(--gold);
+    padding-left: 12px;
+    width: 100%;
+  }
+
+  .meaning-example .ex-pinyin {
+    font-size: 12px;
+    color: var(--red);
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+  }
+
+  .meaning-example .ex-vn {
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'Noto Sans SC', sans-serif;
+  }
+
+  .card-actions {
+    display: flex;
+    gap: 12px;
+    width: 100%;
+    max-width: 600px;
+  }
+
+  .btn {
+    flex: 1;
+    padding: 13px;
+    border: none;
+    border-radius: 3px;
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.5px;
+  }
+
+  .btn-again {
+    background: #fde8e6;
+    color: var(--red);
+    border: 1px solid #f5c4bf;
+  }
+  .btn-again:hover { background: var(--red); color: white; }
+
+  .btn-hard {
+    background: #fef5e0;
+    color: #b8860b;
+    border: 1px solid #f0d080;
+  }
+  .btn-hard:hover { background: var(--gold); color: var(--ink); }
+
+  .btn-good {
+    background: #e8f4ee;
+    color: var(--jade);
+    border: 1px solid #b4dcc8;
+  }
+  .btn-good:hover { background: var(--jade); color: white; }
+
+  .btn-easy {
+    background: var(--ink);
+    color: var(--gold2);
+    border: 1px solid var(--ink);
+  }
+  .btn-easy:hover { background: var(--ink2); }
+
+  .btn-reveal {
+    width: 100%;
+    max-width: 600px;
+    padding: 14px;
+    background: var(--ink);
+    color: var(--gold2);
+    border: none;
+    border-radius: 3px;
+    font-family: 'Noto Serif SC', serif;
+    font-size: 15px;
+    cursor: pointer;
+    letter-spacing: 2px;
+    transition: all 0.2s;
+  }
+  .btn-reveal:hover { background: var(--ink2); transform: translateY(-1px); }
+
+  /* === QUIZ === */
+  .quiz-area {
+    max-width: 680px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .quiz-question-card {
+    background: #fffdf8;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 32px;
+    text-align: center;
+    box-shadow: 0 4px 24px rgba(26,18,8,0.08);
+    position: relative;
+  }
+
+  .quiz-question-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--jade), var(--gold));
+  }
+
+  .quiz-q-num {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .quiz-hanzi {
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 72px;
+    color: var(--ink);
+    line-height: 1.1;
+  }
+
+  .quiz-pinyin-q {
+    font-size: 22px;
+    color: var(--red);
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    margin-top: 4px;
+  }
+
+  .quiz-instruction {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 12px;
+  }
+
+  .quiz-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .quiz-option {
+    padding: 16px 20px;
+    background: #fffdf8;
+    border: 2px solid var(--border);
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 15px;
+    color: var(--ink);
+    text-align: left;
+    transition: all 0.2s;
+    font-family: 'Noto Sans SC', sans-serif;
+    line-height: 1.4;
+  }
+
+  .quiz-option:hover:not(.disabled) {
+    border-color: var(--gold);
+    background: #fefaf0;
+  }
+
+  .quiz-option.correct {
+    border-color: var(--jade2);
+    background: #e8f4ee;
+    color: var(--jade);
+  }
+
+  .quiz-option.wrong {
+    border-color: var(--red);
+    background: #fde8e6;
+    color: var(--red);
+  }
+
+  .quiz-option.disabled { cursor: default; }
+
+  .quiz-result-msg {
+    text-align: center;
+    padding: 16px;
+    border-radius: 4px;
+    font-size: 15px;
+    font-weight: 500;
+    display: none;
+  }
+
+  .quiz-result-msg.show { display: block; }
+  .quiz-result-msg.ok { background: #e8f4ee; color: var(--jade); }
+  .quiz-result-msg.err { background: #fde8e6; color: var(--red); }
+
+  .quiz-next-btn {
+    width: 100%;
+    padding: 14px;
+    background: var(--ink);
+    color: var(--gold2);
+    border: none;
+    border-radius: 3px;
+    font-size: 15px;
+    cursor: pointer;
+    letter-spacing: 1px;
+    font-family: 'Noto Serif SC', serif;
+    display: none;
+    transition: all 0.2s;
+  }
+  .quiz-next-btn.show { display: block; }
+  .quiz-next-btn:hover { background: var(--red); color: white; }
+
+  /* === STROKE / OVERVIEW === */
+  .vocab-overview {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+  }
+
+  .vocab-card {
+    background: #fffdf8;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 16px 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+  }
+
+  .vocab-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px var(--shadow);
+  }
+
+  .vocab-card .vc-hanzi {
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 40px;
+    color: var(--ink);
+  }
+
+  .vocab-card .vc-pinyin {
+    font-size: 12px;
+    color: var(--red);
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+  }
+
+  .vocab-card .vc-meaning {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 4px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .vocab-card .vc-status {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+  }
+
+  /* === STROKE CANVAS === */
+  .stroke-section {
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .stroke-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .stroke-hanzi-big {
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 72px;
+    color: var(--ink);
+  }
+
+  .stroke-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .stroke-canvas-wrap {
+    position: relative;
+    background: #fffdf8;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 16px;
+    display: flex;
+    justify-content: center;
+    box-shadow: inset 0 2px 8px rgba(26,18,8,0.04);
+  }
+
+  canvas#strokeCanvas {
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    background: white;
+    cursor: crosshair;
+    touch-action: none;
+  }
+
+  .stroke-controls {
+    display: flex;
+    gap: 10px;
+  }
+
+  .stroke-btn {
+    padding: 10px 20px;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    background: #fffdf8;
+    cursor: pointer;
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 13px;
+    color: var(--ink);
+    transition: all 0.2s;
+  }
+
+  .stroke-btn:hover { background: var(--ink); color: var(--gold2); }
+  .stroke-btn.primary { background: var(--ink); color: var(--gold2); border-color: var(--ink); }
+  .stroke-btn.primary:hover { background: var(--red); border-color: var(--red); }
+
+  /* ========== RIGHT PANEL ========== */
+  .sidebar-right {
+    background: #f0e8d8;
+    border-left: 1px solid var(--border);
+    padding: 24px 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .panel-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: 1px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .detail-hanzi {
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 80px;
+    color: var(--ink);
+    text-align: center;
+    line-height: 1;
+    text-shadow: 3px 4px 0 rgba(26,18,8,0.07);
+  }
+
+  .detail-pinyin {
+    text-align: center;
+    font-family: 'Crimson Pro', serif;
+    font-size: 22px;
+    color: var(--red);
+    font-style: italic;
+    letter-spacing: 2px;
+  }
+
+  .detail-meaning {
+    font-size: 15px;
+    color: var(--ink);
+    line-height: 1.6;
+    padding: 12px;
+    background: rgba(255,255,255,0.5);
+    border-radius: 3px;
+    border-left: 3px solid var(--gold);
+  }
+
+  .detail-row {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    font-size: 13px;
+    color: var(--ink2);
+  }
+
+  .detail-row .label {
+    font-weight: 600;
+    color: var(--muted);
+    min-width: 56px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding-top: 2px;
+  }
+
+  .detail-row .val {
+    color: var(--ink);
+    line-height: 1.5;
+  }
+
+  .example-box {
+    background: rgba(255,255,255,0.6);
+    border-radius: 3px;
+    padding: 10px 12px;
+    font-size: 13px;
+    border-left: 3px solid var(--jade);
+  }
+
+  .example-box .ex-zh {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 15px;
+    color: var(--ink);
+  }
+
+  .example-box .ex-py {
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    color: var(--red);
+    font-size: 12px;
+    margin-top: 2px;
+  }
+
+  .example-box .ex-vn {
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 2px;
+  }
+
+  .audio-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 10px;
+    background: var(--ink);
+    color: var(--gold2);
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 13px;
+    font-family: 'Noto Sans SC', sans-serif;
+    transition: all 0.2s;
+    letter-spacing: 0.5px;
+  }
+
+  .audio-btn:hover { background: var(--red); }
+  .audio-btn:active { transform: scale(0.98); }
+
+  /* ========== STATS PANEL ========== */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .stat-box {
+    background: #fffdf8;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 12px;
+    text-align: center;
+  }
+
+  .stat-box .s-val {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1;
+  }
+
+  .stat-box .s-val.red { color: var(--red); }
+  .stat-box .s-val.jade { color: var(--jade2); }
+  .stat-box .s-val.gold { color: var(--gold); }
+
+  .stat-box .s-lbl {
+    font-size: 10px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 4px;
+  }
+
+  /* ========== MINI MAP ========== */
+  .hsk-progress-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .hsk-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+  }
+
+  .hsk-bar-row .h-label {
+    width: 36px;
+    font-weight: 700;
+    color: var(--muted);
+  }
+
+  .hsk-bar-row .h-bar {
+    flex: 1;
+    height: 8px;
+    background: var(--paper3);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .hsk-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.6s ease;
+  }
+
+  .hsk-bar-row .h-num {
+    font-size: 11px;
+    color: var(--muted);
+    width: 40px;
+    text-align: right;
+  }
+
+  /* ========== MODE SELECTOR ========== */
+  .mode-tabs {
+    display: flex;
+    gap: 0;
+    background: var(--paper3);
+    border-radius: 4px;
+    padding: 3px;
+    margin-bottom: 8px;
+  }
+
+  .mode-tab {
+    flex: 1;
+    padding: 8px 4px;
+    border: none;
+    background: transparent;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+    font-family: 'Noto Sans SC', sans-serif;
+    color: var(--muted);
+    transition: all 0.2s;
+    letter-spacing: 0.3px;
+  }
+
+  .mode-tab.active {
+    background: var(--ink);
+    color: var(--gold2);
+    font-weight: 500;
+  }
+
+  /* ========== TONE COLORS ========== */
+  .tone1 { color: #e74c3c; }
+  .tone2 { color: #27ae60; }
+  .tone3 { color: #2980b9; }
+  .tone4 { color: #8e44ad; }
+  .tone5 { color: #95a5a6; }
+
+  /* ========== SCROLL ========== */
+  ::-webkit-scrollbar { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(26,18,8,0.15); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(26,18,8,0.3); }
+
+  /* ========== ANIMATIONS ========== */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes flip {
+    0% { transform: rotateY(0deg); }
+    50% { transform: rotateY(90deg); }
+    100% { transform: rotateY(0deg); }
+  }
+
+  .fade-in { animation: fadeIn 0.3s ease; }
+  .flip-anim { animation: flip 0.35s ease; }
+
+  /* ========== SEARCH ========== */
+  .search-wrap {
+    padding: 8px 20px 0;
+  }
+
+  .search-input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid rgba(240,192,64,0.2);
+    border-radius: 3px;
+    background: rgba(255,255,255,0.06);
+    color: var(--paper);
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .search-input::placeholder { color: rgba(245,237,224,0.3); }
+  .search-input:focus { border-color: var(--gold); }
+
+  /* ========== LOADING ========== */
+  .mode-view { display: none; }
+  .mode-view.active { display: flex; flex-direction: column; }
+
+  /* ========== TONES GUIDE ========== */
+  .tones-guide {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .tone-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 10px;
+    border-radius: 3px;
+    font-size: 13px;
+  }
+
+  .tone-row .t-num {
+    font-weight: 700;
+    width: 20px;
+    font-family: 'Noto Serif SC', serif;
+    font-size: 15px;
+  }
+
+  .tone-row .t-mark { font-size: 22px; }
+  .tone-row .t-desc { color: var(--muted); font-size: 12px; }
+
+  /* celebrate */
+  .celebrate-overlay {
+    position: fixed; inset: 0;
+    pointer-events: none;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .celebrate-msg {
+    background: var(--ink);
+    color: var(--gold2);
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 48px;
+    padding: 24px 40px;
+    border-radius: 4px;
+    border: 2px solid var(--gold);
+    box-shadow: 0 8px 40px rgba(26,18,8,0.4);
+    animation: celebratePop 2s ease forwards;
+    display: none;
+  }
+
+  @keyframes celebratePop {
+    0% { opacity: 0; transform: scale(0.5) rotate(-5deg); }
+    20% { opacity: 1; transform: scale(1.05) rotate(2deg); }
+    30% { transform: scale(1) rotate(0deg); }
+    70% { opacity: 1; }
+    100% { opacity: 0; transform: scale(0.9) translateY(-30px); }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- HEADER -->
+<header>
+  <div class="logo">
+    <div class="logo-char">汉</div>
+    <div class="logo-text">
+      <strong>汉语学习</strong>
+      <span>Học Tiếng Trung · HSK 1–5</span>
+    </div>
+  </div>
+
+  <div class="hsk-tabs">
+    <div class="hsk-tab active" data-hsk="1" onclick="selectHSK(1)">HSK 1</div>
+    <div class="hsk-tab" data-hsk="2" onclick="selectHSK(2)">HSK 2</div>
+    <div class="hsk-tab" data-hsk="3" onclick="selectHSK(3)">HSK 3</div>
+    <div class="hsk-tab" data-hsk="4" onclick="selectHSK(4)">HSK 4</div>
+    <div class="hsk-tab" data-hsk="5" onclick="selectHSK(5)">HSK 5</div>
+  </div>
+
+  <div class="user-stats">
+    <div class="stat-badge">
+      <div class="val" id="hdr-known">0</div>
+      <div class="lbl">Đã biết</div>
+    </div>
+    <div class="stat-badge">
+      <div class="val" id="hdr-streak">0</div>
+      <div class="lbl">Chuỗi</div>
+    </div>
+    <div class="stat-badge">
+      <div class="val" id="hdr-score">0</div>
+      <div class="lbl">Điểm</div>
+    </div>
+  </div>
+</header>
+
+<!-- MAIN LAYOUT -->
+<div class="main">
+
+  <!-- LEFT SIDEBAR -->
+  <div class="sidebar-left">
+    <div class="section-label">Chế độ học</div>
+    <div class="nav-item active" onclick="setMode('flashcard')" id="nav-flashcard">
+      <span class="icon">🃏</span> Flashcard
+    </div>
+    <div class="nav-item" onclick="setMode('quiz')" id="nav-quiz">
+      <span class="icon">📝</span> Trắc nghiệm
+    </div>
+    <div class="nav-item" onclick="setMode('overview')" id="nav-overview">
+      <span class="icon">📚</span> Từ vựng
+    </div>
+    <div class="nav-item" onclick="setMode('stroke')" id="nav-stroke">
+      <span class="icon">✍️</span> Luyện viết
+    </div>
+
+    <div class="word-list-section">
+      <div class="section-label">Từ vựng HSK <span id="sidebar-hsk-num">1</span></div>
+      <div class="search-wrap">
+        <input class="search-input" type="text" placeholder="Tìm kiếm..." id="searchInput" oninput="filterWords()">
+      </div>
+      <div id="wordList" style="margin-top:8px;"></div>
+    </div>
+  </div>
+
+  <!-- CENTER PANEL -->
+  <div class="center">
+
+    <!-- FLASHCARD MODE -->
+    <div id="view-flashcard" class="mode-view active">
+      <div class="flashcard-area">
+        <div class="progress-bar-wrap">
+          <div class="progress-bar"><div class="progress-fill" id="fc-progress" style="width:0%"></div></div>
+          <div class="progress-text" id="fc-progress-text">0 / 0</div>
+        </div>
+
+        <div class="flashcard" id="flashcard" onclick="revealCard()">
+          <div class="corner-deco tl" id="fc-deco-tl"></div>
+          <div class="corner-deco br" id="fc-deco-br"></div>
+          <div class="card-hsk-badge" id="fc-hsk-badge">HSK 1</div>
+          <div class="card-type-badge">NHẤN ĐỂ LẬT</div>
+          <div class="main-hanzi" id="fc-hanzi">你好</div>
+          <div class="card-pinyin" id="fc-pinyin">nǐ hǎo</div>
+          <div class="card-hint" id="fc-hint">Bạn có biết nghĩa của từ này không?</div>
+
+          <div class="card-back" id="card-back">
+            <div class="meaning-vn" id="fc-meaning"></div>
+            <div class="meaning-example" id="fc-example"></div>
+          </div>
+        </div>
+
+        <button class="btn-reveal" id="reveal-btn" onclick="revealCard()">揭 示 · Xem nghĩa</button>
+
+        <div class="card-actions" id="rating-btns" style="display:none;">
+          <button class="btn btn-again" onclick="rateCard(0)">🔄 Lại<br><small>Chưa nhớ</small></button>
+          <button class="btn btn-hard" onclick="rateCard(1)">😰 Khó<br><small>Gần nhớ</small></button>
+          <button class="btn btn-good" onclick="rateCard(2)">😊 Tốt<br><small>Nhớ được</small></button>
+          <button class="btn btn-easy" onclick="rateCard(3)">⚡ Dễ<br><small>Nhớ rõ</small></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUIZ MODE -->
+    <div id="view-quiz" class="mode-view" style="flex-direction:column;gap:20px;">
+      <div class="quiz-area">
+        <div class="mode-tabs">
+          <button class="mode-tab active" onclick="setQuizType('meaning')" id="qt-meaning">Chọn nghĩa</button>
+          <button class="mode-tab" onclick="setQuizType('hanzi')" id="qt-hanzi">Chọn chữ</button>
+          <button class="mode-tab" onclick="setQuizType('pinyin')" id="qt-pinyin">Chọn pinyin</button>
+        </div>
+
+        <div class="quiz-question-card">
+          <div class="quiz-q-num" id="quiz-q-num">Câu 1 / 10</div>
+          <div id="quiz-display"></div>
+          <div class="quiz-instruction" id="quiz-instruction">Chọn nghĩa đúng</div>
+        </div>
+
+        <div class="quiz-options" id="quiz-options"></div>
+        <div class="quiz-result-msg" id="quiz-result-msg"></div>
+        <button class="quiz-next-btn" id="quiz-next" onclick="nextQuizQuestion()">Câu tiếp theo →</button>
+      </div>
+    </div>
+
+    <!-- OVERVIEW MODE -->
+    <div id="view-overview" class="mode-view" style="flex-direction:column;gap:20px;">
+      <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+        <h2 style="font-family:'Noto Serif SC',serif;font-size:22px;">Từ vựng HSK <span id="ov-hsk-num">1</span></h2>
+        <div class="mode-tabs" style="margin-bottom:0;width:auto;flex:none;">
+          <button class="mode-tab active" onclick="setOVFilter('all')" id="ovf-all">Tất cả</button>
+          <button class="mode-tab" onclick="setOVFilter('new')" id="ovf-new">Chưa học</button>
+          <button class="mode-tab" onclick="setOVFilter('known')" id="ovf-known">Đã biết</button>
+        </div>
+        <div style="flex:1;min-width:120px;text-align:right;font-size:13px;color:var(--muted);" id="ov-count"></div>
+      </div>
+      <div class="vocab-overview" id="vocabOverview"></div>
+    </div>
+
+    <!-- STROKE MODE -->
+    <div id="view-stroke" class="mode-view" style="flex-direction:column;gap:20px;">
+      <div class="stroke-section">
+        <div class="stroke-header">
+          <div class="stroke-hanzi-big" id="stroke-hanzi">你</div>
+          <div class="stroke-info">
+            <div style="font-family:'Crimson Pro',serif;font-size:22px;color:var(--red);font-style:italic;" id="stroke-pinyin">nǐ</div>
+            <div style="font-size:15px;color:var(--ink);margin-top:4px;" id="stroke-meaning">bạn, anh, chị, em</div>
+            <div style="font-size:12px;color:var(--muted);margin-top:8px;">✍️ Hãy luyện viết chữ này</div>
+          </div>
+        </div>
+
+        <div class="stroke-canvas-wrap">
+          <div style="display:flex;flex-direction:column;gap:12px;align-items:center;">
+            <div style="font-size:12px;color:var(--muted);text-align:center;">Ô tập viết (nhấn và kéo để viết)</div>
+            <div style="position:relative;width:280px;height:280px;">
+              <!-- Guide character -->
+              <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Ma Shan Zheng',cursive;font-size:220px;color:rgba(26,18,8,0.04);line-height:1;pointer-events:none;user-select:none;" id="stroke-guide"></div>
+              <!-- Grid lines -->
+              <svg style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;" viewBox="0 0 280 280">
+                <line x1="140" y1="0" x2="140" y2="280" stroke="rgba(26,18,8,0.06)" stroke-width="1" stroke-dasharray="4,4"/>
+                <line x1="0" y1="140" x2="280" y2="140" stroke="rgba(26,18,8,0.06)" stroke-width="1" stroke-dasharray="4,4"/>
+                <line x1="0" y1="0" x2="280" y2="280" stroke="rgba(26,18,8,0.04)" stroke-width="1" stroke-dasharray="3,6"/>
+                <line x1="280" y1="0" x2="0" y2="280" stroke="rgba(26,18,8,0.04)" stroke-width="1" stroke-dasharray="3,6"/>
+                <rect x="1" y="1" width="278" height="278" fill="none" stroke="rgba(26,18,8,0.12)" stroke-width="1"/>
+              </svg>
+              <canvas id="strokeCanvas" width="280" height="280" style="position:absolute;inset:0;width:280px;height:280px;background:transparent;"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="stroke-controls">
+          <button class="stroke-btn" onclick="clearCanvas()">🗑️ Xóa</button>
+          <button class="stroke-btn primary" onclick="nextStrokeWord()">Từ tiếp →</button>
+          <button class="stroke-btn" onclick="prevStrokeWord()">← Từ trước</button>
+        </div>
+
+        <div style="background:#fffdf8;border:1px solid var(--border);border-radius:4px;padding:16px;">
+          <div style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">Hướng dẫn nét viết</div>
+          <div style="font-family:'Noto Serif SC',serif;font-size:28px;color:rgba(26,18,8,0.12);text-align:center;line-height:2;letter-spacing:24px;" id="stroke-chars-row"></div>
+          <div style="font-size:12px;color:var(--muted);text-align:center;margin-top:8px;">Các từ trong bài học hiện tại</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /center -->
+
+  <!-- RIGHT SIDEBAR -->
+  <div class="sidebar-right">
+
+    <!-- Detail -->
+    <div>
+      <div class="panel-title">📖 Chi tiết từ</div>
+      <div style="margin-top:12px;display:flex;flex-direction:column;gap:12px;">
+        <div class="detail-hanzi" id="detail-hanzi">你好</div>
+        <div class="detail-pinyin" id="detail-pinyin">nǐ hǎo</div>
+        <button class="audio-btn" onclick="speak()" id="audio-btn">
+          🔊 Phát âm
+        </button>
+        <div class="detail-meaning" id="detail-meaning">Xin chào; Chào bạn</div>
+
+        <div class="detail-row">
+          <div class="label">Loại</div>
+          <div class="val" id="detail-type">—</div>
+        </div>
+        <div class="detail-row">
+          <div class="label">HSK</div>
+          <div class="val" id="detail-hsk">1</div>
+        </div>
+        <div class="detail-row">
+          <div class="label">Ký ức</div>
+          <div class="val" id="detail-srs">Chưa học</div>
+        </div>
+
+        <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:4px;">Ví dụ</div>
+        <div class="example-box" id="detail-example-box">
+          <div class="ex-zh">—</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div>
+      <div class="panel-title">📊 Tiến độ</div>
+      <div class="stats-grid" style="margin-top:12px;">
+        <div class="stat-box">
+          <div class="s-val jade" id="stat-known">0</div>
+          <div class="s-lbl">Đã biết</div>
+        </div>
+        <div class="stat-box">
+          <div class="s-val gold" id="stat-learning">0</div>
+          <div class="s-lbl">Đang học</div>
+        </div>
+        <div class="stat-box">
+          <div class="s-val red" id="stat-streak">0</div>
+          <div class="s-lbl">Chuỗi ngày</div>
+        </div>
+        <div class="stat-box">
+          <div class="s-val" id="stat-total">0</div>
+          <div class="s-lbl">Tổng từ</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HSK Progress -->
+    <div>
+      <div class="panel-title">🎯 HSK Tổng quan</div>
+      <div class="hsk-progress-bars" style="margin-top:12px;" id="hsk-progress-bars"></div>
+    </div>
+
+    <!-- Tone guide -->
+    <div>
+      <div class="panel-title">🎵 Thanh điệu</div>
+      <div class="tones-guide" style="margin-top:12px;">
+        <div class="tone-row" style="background:rgba(231,76,60,0.08);">
+          <div class="t-num tone1">1</div>
+          <div class="t-mark tone1">ā</div>
+          <div class="t-desc">Thanh ngang — cao bằng</div>
+        </div>
+        <div class="tone-row" style="background:rgba(39,174,96,0.08);">
+          <div class="t-num tone2">2</div>
+          <div class="t-mark tone2">á</div>
+          <div class="t-desc">Thanh sắc — lên cao</div>
+        </div>
+        <div class="tone-row" style="background:rgba(41,128,185,0.08);">
+          <div class="t-num tone3">3</div>
+          <div class="t-mark tone3">ǎ</div>
+          <div class="t-desc">Thanh ngã — xuống-lên</div>
+        </div>
+        <div class="tone-row" style="background:rgba(142,68,173,0.08);">
+          <div class="t-num tone4">4</div>
+          <div class="t-mark tone4">à</div>
+          <div class="t-desc">Thanh huyền — xuống mạnh</div>
+        </div>
+        <div class="tone-row" style="background:rgba(149,165,166,0.08);">
+          <div class="t-num tone5">5</div>
+          <div class="t-mark tone5">a</div>
+          <div class="t-desc">Thanh nhẹ — không dấu</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /sidebar-right -->
+
+</div><!-- /main -->
+</div><!-- /app -->
+
+<!-- CELEBRATE -->
+<div class="celebrate-overlay">
+  <div class="celebrate-msg" id="celebrate-msg">太棒了！</div>
+</div>
+
+<script>
+// ========== DATA ==========
+const HSK_DATA = {
+  1: [
+    { h: '你好', p: 'nǐ hǎo', m: 'Xin chào; Chào bạn', type: 'Câu chào', ex: { zh: '你好！我是小明。', py: 'Nǐ hǎo! Wǒ shì Xiǎo Míng.', vn: 'Xin chào! Tôi là Tiểu Minh.' } },
+    { h: '谢谢', p: 'xiè xiè', m: 'Cảm ơn', type: 'Câu lịch sự', ex: { zh: '谢谢你的帮助。', py: 'Xièxiè nǐ de bāngzhù.', vn: 'Cảm ơn sự giúp đỡ của bạn.' } },
+    { h: '对不起', p: 'duì bu qǐ', m: 'Xin lỗi', type: 'Câu lịch sự', ex: { zh: '对不起，我来晚了。', py: 'Duìbuqǐ, wǒ lái wǎn le.', vn: 'Xin lỗi, tôi đến muộn.' } },
+    { h: '我', p: 'wǒ', m: 'Tôi, tao, ta', type: 'Đại từ', ex: { zh: '我是越南人。', py: 'Wǒ shì Yuènán rén.', vn: 'Tôi là người Việt Nam.' } },
+    { h: '你', p: 'nǐ', m: 'Bạn, anh, chị, mày', type: 'Đại từ', ex: { zh: '你叫什么名字？', py: 'Nǐ jiào shénme míngzi?', vn: 'Bạn tên là gì?' } },
+    { h: '他', p: 'tā', m: 'Anh ấy, ông ấy', type: 'Đại từ', ex: { zh: '他是我的朋友。', py: 'Tā shì wǒ de péngyou.', vn: 'Anh ấy là bạn của tôi.' } },
+    { h: '她', p: 'tā', m: 'Cô ấy, bà ấy', type: 'Đại từ', ex: { zh: '她很漂亮。', py: 'Tā hěn piàoliang.', vn: 'Cô ấy rất đẹp.' } },
+    { h: '是', p: 'shì', m: 'Là (động từ)', type: 'Động từ', ex: { zh: '我是老师。', py: 'Wǒ shì lǎoshī.', vn: 'Tôi là giáo viên.' } },
+    { h: '不', p: 'bù', m: 'Không (phủ định)', type: 'Trạng từ', ex: { zh: '我不喜欢吃鱼。', py: 'Wǒ bù xǐhuān chī yú.', vn: 'Tôi không thích ăn cá.' } },
+    { h: '好', p: 'hǎo', m: 'Tốt, hay, giỏi', type: 'Tính từ', ex: { zh: '今天天气很好。', py: 'Jīntiān tiānqì hěn hǎo.', vn: 'Hôm nay thời tiết rất đẹp.' } },
+    { h: '大', p: 'dà', m: 'To, lớn', type: 'Tính từ', ex: { zh: '这个苹果很大。', py: 'Zhège píngguǒ hěn dà.', vn: 'Quả táo này rất to.' } },
+    { h: '小', p: 'xiǎo', m: 'Nhỏ, bé', type: 'Tính từ', ex: { zh: '我有一只小猫。', py: 'Wǒ yǒu yī zhī xiǎo māo.', vn: 'Tôi có một con mèo nhỏ.' } },
+    { h: '人', p: 'rén', m: 'Người', type: 'Danh từ', ex: { zh: '中国人很友好。', py: 'Zhōngguó rén hěn yǒuhǎo.', vn: 'Người Trung Quốc rất thân thiện.' } },
+    { h: '水', p: 'shuǐ', m: 'Nước', type: 'Danh từ', ex: { zh: '我想喝水。', py: 'Wǒ xiǎng hē shuǐ.', vn: 'Tôi muốn uống nước.' } },
+    { h: '吃', p: 'chī', m: 'Ăn', type: 'Động từ', ex: { zh: '你想吃什么？', py: 'Nǐ xiǎng chī shénme?', vn: 'Bạn muốn ăn gì?' } },
+    { h: '喝', p: 'hē', m: 'Uống', type: 'Động từ', ex: { zh: '我喝茶不喝咖啡。', py: 'Wǒ hē chá bù hē kāfēi.', vn: 'Tôi uống trà không uống cà phê.' } },
+    { h: '来', p: 'lái', m: 'Đến, tới', type: 'Động từ', ex: { zh: '他明天来我家。', py: 'Tā míngtiān lái wǒ jiā.', vn: 'Anh ấy ngày mai đến nhà tôi.' } },
+    { h: '去', p: 'qù', m: 'Đi, sang', type: 'Động từ', ex: { zh: '我要去超市。', py: 'Wǒ yào qù chāoshì.', vn: 'Tôi muốn đi siêu thị.' } },
+    { h: '看', p: 'kàn', m: 'Xem, nhìn, đọc', type: 'Động từ', ex: { zh: '我喜欢看书。', py: 'Wǒ xǐhuān kàn shū.', vn: 'Tôi thích đọc sách.' } },
+    { h: '说', p: 'shuō', m: 'Nói', type: 'Động từ', ex: { zh: '他会说中文。', py: 'Tā huì shuō Zhōngwén.', vn: 'Anh ấy biết nói tiếng Trung.' } },
+    { h: '一', p: 'yī', m: 'Một', type: 'Số từ', ex: { zh: '我有一个姐姐。', py: 'Wǒ yǒu yī gè jiějiě.', vn: 'Tôi có một người chị.' } },
+    { h: '二', p: 'èr', m: 'Hai', type: 'Số từ', ex: { zh: '我有两个弟弟。', py: 'Wǒ yǒu liǎng gè dìdì.', vn: 'Tôi có hai người em trai.' } },
+    { h: '三', p: 'sān', m: 'Ba', type: 'Số từ', ex: { zh: '这里有三本书。', py: 'Zhèlǐ yǒu sān běn shū.', vn: 'Ở đây có ba quyển sách.' } },
+    { h: '今天', p: 'jīn tiān', m: 'Hôm nay', type: 'Danh từ', ex: { zh: '今天是我的生日。', py: 'Jīntiān shì wǒ de shēngrì.', vn: 'Hôm nay là sinh nhật tôi.' } },
+    { h: '明天', p: 'míng tiān', m: 'Ngày mai', type: 'Danh từ', ex: { zh: '明天我去学校。', py: 'Míngtiān wǒ qù xuéxiào.', vn: 'Ngày mai tôi đến trường.' } },
+    { h: '中国', p: 'Zhōng guó', m: 'Trung Quốc', type: 'Danh từ riêng', ex: { zh: '中国是一个大国。', py: 'Zhōngguó shì yīgè dàguó.', vn: 'Trung Quốc là một nước lớn.' } },
+    { h: '学生', p: 'xué shēng', m: 'Học sinh, sinh viên', type: 'Danh từ', ex: { zh: '我是大学生。', py: 'Wǒ shì dàxuéshēng.', vn: 'Tôi là sinh viên đại học.' } },
+    { h: '老师', p: 'lǎo shī', m: 'Giáo viên, thầy/cô', type: 'Danh từ', ex: { zh: '我们的老师很好。', py: 'Wǒmen de lǎoshī hěn hǎo.', vn: 'Giáo viên của chúng tôi rất tốt.' } },
+    { h: '朋友', p: 'péng yǒu', m: 'Bạn bè', type: 'Danh từ', ex: { zh: '他是我最好的朋友。', py: 'Tā shì wǒ zuì hǎo de péngyǒu.', vn: 'Anh ấy là người bạn tốt nhất của tôi.' } },
+    { h: '什么', p: 'shén me', m: 'Gì, cái gì', type: 'Đại từ nghi vấn', ex: { zh: '这是什么？', py: 'Zhè shì shénme?', vn: 'Đây là cái gì?' } },
+  ],
+  2: [
+    { h: '工作', p: 'gōng zuò', m: 'Công việc; Làm việc', type: 'Danh/Động từ', ex: { zh: '我在这家公司工作。', py: 'Wǒ zài zhè jiā gōngsī gōngzuò.', vn: 'Tôi làm việc ở công ty này.' } },
+    { h: '时间', p: 'shí jiān', m: 'Thời gian', type: 'Danh từ', ex: { zh: '我没有时间。', py: 'Wǒ méiyǒu shíjiān.', vn: 'Tôi không có thời gian.' } },
+    { h: '问题', p: 'wèn tí', m: 'Vấn đề; Câu hỏi', type: 'Danh từ', ex: { zh: '这个问题很难。', py: 'Zhège wèntí hěn nán.', vn: 'Vấn đề này rất khó.' } },
+    { h: '觉得', p: 'jué de', m: 'Cảm thấy, cho là', type: 'Động từ', ex: { zh: '我觉得他说得对。', py: 'Wǒ juéde tā shuō de duì.', vn: 'Tôi cho là anh ấy nói đúng.' } },
+    { h: '知道', p: 'zhī dào', m: 'Biết, hiểu', type: 'Động từ', ex: { zh: '你知道他在哪里吗？', py: 'Nǐ zhīdào tā zài nǎlǐ ma?', vn: 'Bạn có biết anh ấy ở đâu không?' } },
+    { h: '希望', p: 'xī wàng', m: 'Hy vọng, mong muốn', type: 'Động từ', ex: { zh: '我希望你快乐。', py: 'Wǒ xīwàng nǐ kuàilè.', vn: 'Tôi hy vọng bạn vui vẻ.' } },
+    { h: '帮助', p: 'bāng zhù', m: 'Giúp đỡ', type: 'Động từ', ex: { zh: '请帮助我。', py: 'Qǐng bāngzhù wǒ.', vn: 'Hãy giúp tôi.' } },
+    { h: '开始', p: 'kāi shǐ', m: 'Bắt đầu', type: 'Động từ', ex: { zh: '我们现在开始吧。', py: 'Wǒmen xiànzài kāishǐ ba.', vn: 'Chúng ta bắt đầu bây giờ nhé.' } },
+    { h: '结束', p: 'jié shù', m: 'Kết thúc', type: 'Động từ', ex: { zh: '会议结束了。', py: 'Huìyì jiéshù le.', vn: 'Cuộc họp đã kết thúc.' } },
+    { h: '生活', p: 'shēng huó', m: 'Cuộc sống; Sinh hoạt', type: 'Danh/Động từ', ex: { zh: '他的生活很丰富。', py: 'Tā de shēnghuó hěn fēngfù.', vn: 'Cuộc sống của anh ấy rất phong phú.' } },
+    { h: '学习', p: 'xué xí', m: 'Học tập', type: 'Động từ', ex: { zh: '学习中文很有趣。', py: 'Xuéxí Zhōngwén hěn yǒuqù.', vn: 'Học tiếng Trung rất thú vị.' } },
+    { h: '非常', p: 'fēi cháng', m: 'Rất, vô cùng', type: 'Trạng từ', ex: { zh: '这个电影非常好看。', py: 'Zhège diànyǐng fēicháng hǎokàn.', vn: 'Bộ phim này rất hay.' } },
+    { h: '可以', p: 'kě yǐ', m: 'Có thể, được phép', type: 'Động từ', ex: { zh: '你可以进来。', py: 'Nǐ kěyǐ jìnlái.', vn: 'Bạn có thể vào.' } },
+    { h: '因为', p: 'yīn wèi', m: 'Vì, bởi vì', type: 'Liên từ', ex: { zh: '因为下雨，我没出去。', py: 'Yīnwèi xià yǔ, wǒ méi chūqù.', vn: 'Vì trời mưa nên tôi không ra ngoài.' } },
+    { h: '所以', p: 'suǒ yǐ', m: 'Vì vậy, cho nên', type: 'Liên từ', ex: { zh: '他生病了，所以没来。', py: 'Tā shēngbìng le, suǒyǐ méi lái.', vn: 'Anh ấy bị bệnh nên không đến.' } },
+    { h: '但是', p: 'dàn shì', m: 'Nhưng, song', type: 'Liên từ', ex: { zh: '他很忙，但是很快乐。', py: 'Tā hěn máng, dànshì hěn kuàilè.', vn: 'Anh ấy rất bận nhưng rất vui vẻ.' } },
+    { h: '已经', p: 'yǐ jīng', m: 'Đã (rồi)', type: 'Trạng từ', ex: { zh: '我已经吃饭了。', py: 'Wǒ yǐjīng chī fàn le.', vn: 'Tôi đã ăn cơm rồi.' } },
+    { h: '还是', p: 'hái shì', m: 'Hay là, hoặc là', type: 'Liên từ', ex: { zh: '你要茶还是咖啡？', py: 'Nǐ yào chá háishì kāfēi?', vn: 'Bạn muốn trà hay cà phê?' } },
+    { h: '电话', p: 'diàn huà', m: 'Điện thoại', type: 'Danh từ', ex: { zh: '你的电话号码是多少？', py: 'Nǐ de diànhuà hàomǎ shì duōshao?', vn: 'Số điện thoại của bạn là bao nhiêu?' } },
+    { h: '手机', p: 'shǒu jī', m: 'Điện thoại di động', type: 'Danh từ', ex: { zh: '我的手机没有电了。', py: 'Wǒ de shǒujī méiyǒu diàn le.', vn: 'Điện thoại của tôi hết pin rồi.' } },
+  ],
+  3: [
+    { h: '经济', p: 'jīng jì', m: 'Kinh tế', type: 'Danh từ', ex: { zh: '中国经济发展很快。', py: 'Zhōngguó jīngjì fāzhǎn hěn kuài.', vn: 'Kinh tế Trung Quốc phát triển rất nhanh.' } },
+    { h: '发展', p: 'fā zhǎn', m: 'Phát triển', type: 'Động từ', ex: { zh: '科技发展很迅速。', py: 'Kējì fāzhǎn hěn xùnsù.', vn: 'Công nghệ phát triển rất nhanh chóng.' } },
+    { h: '影响', p: 'yǐng xiǎng', m: 'Ảnh hưởng', type: 'Danh/Động từ', ex: { zh: '天气影响了我们的计划。', py: 'Tiānqì yǐngxiǎngle wǒmen de jìhuà.', vn: 'Thời tiết đã ảnh hưởng đến kế hoạch của chúng tôi.' } },
+    { h: '重要', p: 'zhòng yào', m: 'Quan trọng', type: 'Tính từ', ex: { zh: '这件事很重要。', py: 'Zhè jiàn shì hěn zhòngyào.', vn: 'Việc này rất quan trọng.' } },
+    { h: '方法', p: 'fāng fǎ', m: 'Phương pháp, cách', type: 'Danh từ', ex: { zh: '你有什么好方法？', py: 'Nǐ yǒu shénme hǎo fāngfǎ?', vn: 'Bạn có phương pháp tốt nào không?' } },
+    { h: '环境', p: 'huán jìng', m: 'Môi trường', type: 'Danh từ', ex: { zh: '保护环境是我们的责任。', py: 'Bǎohù huánjìng shì wǒmen de zérèn.', vn: 'Bảo vệ môi trường là trách nhiệm của chúng ta.' } },
+    { h: '社会', p: 'shè huì', m: 'Xã hội', type: 'Danh từ', ex: { zh: '这个问题是社会问题。', py: 'Zhège wèntí shì shèhuì wèntí.', vn: 'Vấn đề này là vấn đề xã hội.' } },
+    { h: '机会', p: 'jī huì', m: 'Cơ hội', type: 'Danh từ', ex: { zh: '这是一个好机会。', py: 'Zhè shì yīgè hǎo jīhuì.', vn: 'Đây là một cơ hội tốt.' } },
+    { h: '态度', p: 'tài dù', m: 'Thái độ', type: 'Danh từ', ex: { zh: '他的学习态度很好。', py: 'Tā de xuéxí tàidù hěn hǎo.', vn: 'Thái độ học tập của anh ấy rất tốt.' } },
+    { h: '选择', p: 'xuǎn zé', m: 'Lựa chọn; Chọn', type: 'Danh/Động từ', ex: { zh: '这个选择很难。', py: 'Zhège xuǎnzé hěn nán.', vn: 'Sự lựa chọn này rất khó.' } },
+    { h: '了解', p: 'liǎo jiě', m: 'Hiểu rõ, tìm hiểu', type: 'Động từ', ex: { zh: '我想了解中国文化。', py: 'Wǒ xiǎng liǎojiě Zhōngguó wénhuà.', vn: 'Tôi muốn tìm hiểu văn hóa Trung Quốc.' } },
+    { h: '关系', p: 'guān xi', m: 'Quan hệ, mối quan hệ', type: 'Danh từ', ex: { zh: '我们关系很好。', py: 'Wǒmen guānxi hěn hǎo.', vn: 'Mối quan hệ của chúng tôi rất tốt.' } },
+    { h: '感觉', p: 'gǎn jué', m: 'Cảm giác; Cảm thấy', type: 'Danh/Động từ', ex: { zh: '我感觉有点累。', py: 'Wǒ gǎnjué yǒudiǎn lèi.', vn: 'Tôi cảm thấy hơi mệt.' } },
+    { h: '认为', p: 'rèn wéi', m: 'Cho rằng, nghĩ rằng', type: 'Động từ', ex: { zh: '我认为他是对的。', py: 'Wǒ rènwéi tā shì duì de.', vn: 'Tôi cho rằng anh ấy đúng.' } },
+    { h: '表示', p: 'biǎo shì', m: 'Biểu thị, thể hiện', type: 'Động từ', ex: { zh: '他点头表示同意。', py: 'Tā diǎntóu biǎoshì tóngyì.', vn: 'Anh ấy gật đầu biểu thị đồng ý.' } },
+  ],
+  4: [
+    { h: '经验', p: 'jīng yàn', m: 'Kinh nghiệm', type: 'Danh từ', ex: { zh: '他有丰富的工作经验。', py: 'Tā yǒu fēngfù de gōngzuò jīngyàn.', vn: 'Anh ấy có kinh nghiệm làm việc phong phú.' } },
+    { h: '传统', p: 'chuán tǒng', m: 'Truyền thống', type: 'Danh/Tính từ', ex: { zh: '中国有很多传统节日。', py: 'Zhōngguó yǒu hěnduō chuántǒng jiérì.', vn: 'Trung Quốc có nhiều lễ hội truyền thống.' } },
+    { h: '积极', p: 'jī jí', m: 'Tích cực, chủ động', type: 'Tính từ', ex: { zh: '他对工作很积极。', py: 'Tā duì gōngzuò hěn jījí.', vn: 'Anh ấy rất tích cực trong công việc.' } },
+    { h: '严重', p: 'yán zhòng', m: 'Nghiêm trọng', type: 'Tính từ', ex: { zh: '这个问题很严重。', py: 'Zhège wèntí hěn yánzhòng.', vn: 'Vấn đề này rất nghiêm trọng.' } },
+    { h: '逐渐', p: 'zhú jiàn', m: 'Dần dần, từng bước', type: 'Trạng từ', ex: { zh: '他的中文逐渐进步了。', py: 'Tā de Zhōngwén zhújiàn jìnbù le.', vn: 'Tiếng Trung của anh ấy dần dần tiến bộ.' } },
+    { h: '竞争', p: 'jìng zhēng', m: 'Cạnh tranh', type: 'Danh/Động từ', ex: { zh: '市场竞争越来越激烈。', py: 'Shìchǎng jìngzhēng yuèláiyuè jīliè.', vn: 'Cạnh tranh thị trường ngày càng gay gắt.' } },
+    { h: '坚持', p: 'jiān chí', m: 'Kiên trì, bền bỉ', type: 'Động từ', ex: { zh: '学语言需要坚持。', py: 'Xué yǔyán xūyào jiānchí.', vn: 'Học ngôn ngữ cần phải kiên trì.' } },
+    { h: '意识', p: 'yì shi', m: 'Ý thức; Nhận thức', type: 'Danh/Động từ', ex: { zh: '我们要有环保意识。', py: 'Wǒmen yào yǒu huánbǎo yìshi.', vn: 'Chúng ta cần có ý thức bảo vệ môi trường.' } },
+    { h: '精神', p: 'jīng shén', m: 'Tinh thần, ý chí', type: 'Danh từ', ex: { zh: '他有拼搏精神。', py: 'Tā yǒu pīnbó jīngshén.', vn: 'Anh ấy có tinh thần phấn đấu.' } },
+    { h: '观点', p: 'guān diǎn', m: 'Quan điểm, ý kiến', type: 'Danh từ', ex: { zh: '你对这个问题有什么观点？', py: 'Nǐ duì zhège wèntí yǒu shénme guāndiǎn?', vn: 'Bạn có quan điểm gì về vấn đề này?' } },
+    { h: '提高', p: 'tí gāo', m: 'Nâng cao, cải thiện', type: 'Động từ', ex: { zh: '我想提高我的中文水平。', py: 'Wǒ xiǎng tígāo wǒ de Zhōngwén shuǐpíng.', vn: 'Tôi muốn nâng cao trình độ tiếng Trung.' } },
+    { h: '实际', p: 'shí jì', m: 'Thực tế, thực tiễn', type: 'Tính từ', ex: { zh: '你要考虑实际情况。', py: 'Nǐ yào kǎolǜ shíjì qíngkuàng.', vn: 'Bạn cần xem xét tình hình thực tế.' } },
+  ],
+  5: [
+    { h: '哲学', p: 'zhé xué', m: 'Triết học', type: 'Danh từ', ex: { zh: '他研究中国哲学。', py: 'Tā yánjiū Zhōngguó zhéxué.', vn: 'Anh ấy nghiên cứu triết học Trung Quốc.' } },
+    { h: '意识形态', p: 'yì shí xíng tài', m: 'Ý thức hệ, hệ tư tưởng', type: 'Danh từ', ex: { zh: '不同的意识形态导致冲突。', py: 'Bùtóng de yìshí xíngtài dǎozhì chōngtū.', vn: 'Hệ tư tưởng khác nhau dẫn đến xung đột.' } },
+    { h: '辩证', p: 'biàn zhèng', m: 'Biện chứng', type: 'Tính từ', ex: { zh: '我们要辩证地看问题。', py: 'Wǒmen yào biànzhèng de kàn wèntí.', vn: 'Chúng ta cần nhìn vấn đề một cách biện chứng.' } },
+    { h: '本质', p: 'běn zhì', m: 'Bản chất, tính chất', type: 'Danh từ', ex: { zh: '问题的本质是什么？', py: 'Wèntí de běnzhì shì shénme?', vn: 'Bản chất của vấn đề là gì?' } },
+    { h: '矛盾', p: 'máo dùn', m: 'Mâu thuẫn; Mâu thuẫn nhau', type: 'Danh/Tính từ', ex: { zh: '他说的话自相矛盾。', py: 'Tā shuō de huà zìxiāng máodùn.', vn: 'Lời anh ấy nói tự mâu thuẫn với nhau.' } },
+    { h: '归纳', p: 'guī nà', m: 'Quy nạp; Tổng hợp', type: 'Động từ', ex: { zh: '请归纳一下要点。', py: 'Qǐng guīnà yīxià yàodiǎn.', vn: 'Hãy tổng hợp các điểm chính.' } },
+    { h: '趋势', p: 'qū shì', m: 'Xu hướng, chiều hướng', type: 'Danh từ', ex: { zh: '这是未来发展的趋势。', py: 'Zhè shì wèilái fāzhǎn de qūshì.', vn: 'Đây là xu hướng phát triển tương lai.' } },
+    { h: '规律', p: 'guī lǜ', m: 'Quy luật, điều lệ', type: 'Danh từ', ex: { zh: '自然界有其自身的规律。', py: 'Zìrán jiè yǒu qí zìshēn de guīlǜ.', vn: 'Thế giới tự nhiên có quy luật riêng của nó.' } },
+    { h: '尽管', p: 'jǐn guǎn', m: 'Mặc dù, dù (có)', type: 'Liên từ', ex: { zh: '尽管困难，我们也要坚持。', py: 'Jǐnguǎn kùnnán, wǒmen yě yào jiānchí.', vn: 'Mặc dù khó khăn, chúng ta vẫn phải kiên trì.' } },
+    { h: '逻辑', p: 'luó ji', m: 'Logic, lý luận', type: 'Danh từ', ex: { zh: '他的思维很有逻辑。', py: 'Tā de sīwéi hěn yǒu luójí.', vn: 'Tư duy của anh ấy rất logic.' } },
+  ]
+};
+
+// ========== STATE ==========
+let currentHSK = 1;
+let currentMode = 'flashcard';
+let currentWordIndex = 0;
+let cardRevealed = false;
+let studyQueue = [];
+let srsData = JSON.parse(localStorage.getItem('srs') || '{}');
+let userStats = JSON.parse(localStorage.getItem('stats') || '{"streak":0,"score":0,"totalSessions":0}');
+let quizType = 'meaning';
+let quizQuestions = [];
+let quizCurrentIdx = 0;
+let quizAnswered = false;
+let ovFilter = 'all';
+let strokeWordIdx = 0;
+let isDrawing = false;
+let lastX, lastY;
+let ctx;
+
+// ========== INIT ==========
+function init() {
+  initCanvas();
+  buildStudyQueue();
+  renderWordList();
+  renderFlashcard();
+  updateStats();
+  renderHSKProgress();
+  updateDetail(getWords()[0]);
+}
+
+function getWords() {
+  return HSK_DATA[currentHSK];
+}
+
+function getWordKey(w) {
+  return `hsk${currentHSK}_${w.h}`;
+}
+
+function getSRS(w) {
+  return srsData[getWordKey(w)] || { status: 'new', nextReview: 0, interval: 0, reps: 0 };
+}
+
+function saveSRS(w, data) {
+  srsData[getWordKey(w)] = data;
+  localStorage.setItem('srs', JSON.stringify(srsData));
+}
+
+function buildStudyQueue() {
+  const words = getWords();
+  const now = Date.now();
+  studyQueue = words.filter(w => {
+    const srs = getSRS(w);
+    return srs.status === 'new' || srs.nextReview <= now;
+  });
+  if (studyQueue.length === 0) studyQueue = [...words];
+  currentWordIndex = 0;
+}
+
+// ========== HSK SELECTOR ==========
+function selectHSK(n) {
+  currentHSK = n;
+  document.querySelectorAll('.hsk-tab').forEach(t => t.classList.remove('active'));
+  document.querySelector(`[data-hsk="${n}"]`).classList.add('active');
+  document.getElementById('sidebar-hsk-num').textContent = n;
+  document.getElementById('ov-hsk-num').textContent = n;
+  buildStudyQueue();
+  renderWordList();
+  renderFlashcard();
+  renderVocabOverview();
+  updateStats();
+  renderHSKProgress();
+  strokeWordIdx = 0;
+  updateStrokeView();
+}
+
+// ========== MODE ==========
+function setMode(mode) {
+  currentMode = mode;
+  document.querySelectorAll('.mode-view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById(`view-${mode}`).classList.add('active');
+  document.getElementById(`nav-${mode}`).classList.add('active');
+
+  if (mode === 'quiz') startQuiz();
+  if (mode === 'overview') renderVocabOverview();
+  if (mode === 'stroke') updateStrokeView();
+}
+
+// ========== WORD LIST ==========
+function renderWordList() {
+  const words = getWords();
+  const query = (document.getElementById('searchInput').value || '').toLowerCase();
+  const el = document.getElementById('wordList');
+  el.innerHTML = '';
+
+  words.forEach((w, i) => {
+    if (query && !w.h.includes(query) && !w.p.toLowerCase().includes(query) && !w.m.toLowerCase().includes(query)) return;
+    const srs = getSRS(w);
+    const dotClass = srs.status === 'known' ? 'dot-known' : srs.status === 'learning' ? 'dot-learning' : 'dot-new';
+
+    const item = document.createElement('div');
+    item.className = 'word-item' + (i === currentWordIndex ? ' active-word' : '');
+    item.onclick = () => { currentWordIndex = i; jumpToWord(w, i); };
+    item.innerHTML = `
+      <div class="hanzi">${w.h}</div>
+      <div class="info">
+        <span class="pinyin">${w.p}</span>
+        <span class="meaning-short">${w.m}</span>
+      </div>
+      <div class="word-status-dot ${dotClass}"></div>
+    `;
+    el.appendChild(item);
+  });
+}
+
+function filterWords() { renderWordList(); }
+
+function jumpToWord(w, i) {
+  currentWordIndex = i;
+  cardRevealed = false;
+  renderFlashcard();
+  updateDetail(w);
+  renderWordList();
+}
+
+// ========== FLASHCARD ==========
+function renderFlashcard() {
+  const words = getWords();
+  if (!words.length) return;
+  const w = studyQueue[currentWordIndex % studyQueue.length] || words[0];
+  cardRevealed = false;
+
+  document.getElementById('fc-hanzi').textContent = w.h;
+  document.getElementById('fc-pinyin').textContent = w.p;
+  document.getElementById('fc-hsk-badge').textContent = `HSK ${currentHSK}`;
+  document.getElementById('fc-deco-tl').textContent = w.h[0] || '';
+  document.getElementById('fc-deco-br').textContent = w.h[w.h.length - 1] || '';
+  document.getElementById('card-back').classList.remove('visible');
+  document.getElementById('reveal-btn').style.display = '';
+  document.getElementById('rating-btns').style.display = 'none';
+  document.getElementById('fc-meaning').textContent = '';
+  document.getElementById('fc-example').innerHTML = '';
+  document.getElementById('fc-pinyin').style.display = '';
+  document.getElementById('fc-hint').style.display = '';
+
+  const total = studyQueue.length;
+  const pct = total > 0 ? ((currentWordIndex / total) * 100) : 0;
+  document.getElementById('fc-progress').style.width = pct + '%';
+  document.getElementById('fc-progress-text').textContent = `${currentWordIndex} / ${total}`;
+
+  updateDetail(w);
+  document.getElementById('flashcard').classList.add('fade-in');
+  setTimeout(() => document.getElementById('flashcard').classList.remove('fade-in'), 400);
+}
+
+function revealCard() {
+  if (cardRevealed) return;
+  cardRevealed = true;
+  const words = getWords();
+  const w = studyQueue[currentWordIndex % studyQueue.length] || words[0];
+
+  document.getElementById('fc-meaning').textContent = w.m;
+  document.getElementById('fc-example').innerHTML = `
+    <div>${w.ex.zh}</div>
+    <div class="ex-pinyin">${w.ex.py}</div>
+    <div class="ex-vn">${w.ex.vn}</div>
+  `;
+  document.getElementById('card-back').classList.add('visible');
+  document.getElementById('reveal-btn').style.display = 'none';
+  document.getElementById('rating-btns').style.display = 'flex';
+  document.getElementById('fc-hint').style.display = 'none';
+}
+
+function rateCard(rating) {
+  const words = getWords();
+  const w = studyQueue[currentWordIndex % studyQueue.length] || words[0];
+  const srs = getSRS(w);
+  const now = Date.now();
+
+  let newSRS = { ...srs };
+  if (rating === 0) {
+    newSRS.interval = 1; newSRS.status = 'learning'; newSRS.reps = 0;
+  } else if (rating === 1) {
+    newSRS.interval = Math.max(1, srs.interval); newSRS.status = 'learning'; newSRS.reps++;
+  } else if (rating === 2) {
+    newSRS.interval = Math.max(1, srs.interval + 1) * 1.5; newSRS.status = 'learning'; newSRS.reps++;
+  } else {
+    newSRS.interval = Math.max(3, srs.interval * 2.5); newSRS.status = 'known'; newSRS.reps++;
+  }
+  newSRS.nextReview = now + newSRS.interval * 60000;
+  saveSRS(w, newSRS);
+
+  userStats.score += [0, 1, 3, 5][rating];
+  if (rating >= 2) {
+    userStats.streak = (userStats.streak || 0) + 1;
+    if (userStats.streak % 10 === 0) celebrate();
+  }
+  localStorage.setItem('stats', JSON.stringify(userStats));
+
+  currentWordIndex++;
+  if (currentWordIndex >= studyQueue.length) {
+    currentWordIndex = 0;
+    buildStudyQueue();
+    celebrate();
+  }
+
+  updateStats();
+  renderHSKProgress();
+  renderFlashcard();
+  renderWordList();
+}
+
+// ========== QUIZ ==========
+function startQuiz() {
+  const words = getWords();
+  quizQuestions = shuffle([...words]).slice(0, Math.min(10, words.length));
+  quizCurrentIdx = 0;
+  renderQuizQuestion();
+}
+
+function setQuizType(t) {
+  quizType = t;
+  ['meaning','hanzi','pinyin'].forEach(x => document.getElementById(`qt-${x}`).classList.remove('active'));
+  document.getElementById(`qt-${t}`).classList.add('active');
+  startQuiz();
+}
+
+function renderQuizQuestion() {
+  if (quizCurrentIdx >= quizQuestions.length) {
+    showQuizComplete(); return;
+  }
+  quizAnswered = false;
+  const q = quizQuestions[quizCurrentIdx];
+  const words = getWords();
+
+  document.getElementById('quiz-q-num').textContent = `Câu ${quizCurrentIdx + 1} / ${quizQuestions.length}`;
+  document.getElementById('quiz-result-msg').className = 'quiz-result-msg';
+  document.getElementById('quiz-next').className = 'quiz-next-btn';
+
+  // Display question
+  let displayHTML = '';
+  let instruction = '';
+  let correctAnswer = '';
+  let options = [];
+
+  if (quizType === 'meaning') {
+    displayHTML = `<div class="quiz-hanzi">${q.h}</div><div class="quiz-pinyin-q">${q.p}</div>`;
+    instruction = 'Chọn nghĩa đúng bằng tiếng Việt';
+    correctAnswer = q.m;
+    options = [q, ...shuffle(words.filter(w => w.h !== q.h)).slice(0, 3)];
+    options = shuffle(options).map(w => w.m);
+  } else if (quizType === 'hanzi') {
+    displayHTML = `<div style="font-size:22px;color:var(--ink);font-weight:500;">${q.m}</div>`;
+    instruction = 'Chọn chữ Hán đúng';
+    correctAnswer = q.h;
+    options = [q, ...shuffle(words.filter(w => w.h !== q.h)).slice(0, 3)];
+    options = shuffle(options).map(w => `<span style="font-family:'Ma Shan Zheng',cursive;font-size:28px;">${w.h}</span> <span style="font-size:13px;color:var(--red);font-family:'Crimson Pro',serif;font-style:italic;">${w.p}</span>`);
+    correctAnswer = `<span style="font-family:'Ma Shan Zheng',cursive;font-size:28px;">${q.h}</span> <span style="font-size:13px;color:var(--red);font-family:'Crimson Pro',serif;font-style:italic;">${q.p}</span>`;
+  } else {
+    displayHTML = `<div class="quiz-hanzi">${q.h}</div><div style="font-size:15px;color:var(--muted);margin-top:8px;">${q.m}</div>`;
+    instruction = 'Chọn pinyin đúng';
+    correctAnswer = q.p;
+    options = [q, ...shuffle(words.filter(w => w.h !== q.h)).slice(0, 3)];
+    options = shuffle(options).map(w => w.p);
+  }
+
+  document.getElementById('quiz-display').innerHTML = displayHTML;
+  document.getElementById('quiz-instruction').textContent = instruction;
+
+  const optEl = document.getElementById('quiz-options');
+  optEl.innerHTML = '';
+  options.forEach((opt, i) => {
+    const btn = document.createElement('div');
+    btn.className = 'quiz-option';
+    btn.innerHTML = opt;
+    btn.onclick = () => checkAnswer(btn, opt, correctAnswer);
+    optEl.appendChild(btn);
+  });
+}
+
+function checkAnswer(btn, chosen, correct) {
+  if (quizAnswered) return;
+  quizAnswered = true;
+  const all = document.querySelectorAll('.quiz-option');
+  all.forEach(b => {
+    b.classList.add('disabled');
+    if (b.innerHTML === correct) b.classList.add('correct');
+  });
+
+  const msgEl = document.getElementById('quiz-result-msg');
+  if (chosen === correct) {
+    btn.classList.add('correct');
+    msgEl.textContent = '✓ Chính xác! Tuyệt vời!';
+    msgEl.className = 'quiz-result-msg show ok';
+    userStats.score = (userStats.score || 0) + 5;
+    localStorage.setItem('stats', JSON.stringify(userStats));
+    updateStats();
+  } else {
+    btn.classList.add('wrong');
+    msgEl.textContent = `✗ Sai rồi! Đáp án đúng đã được đánh dấu.`;
+    msgEl.className = 'quiz-result-msg show err';
+  }
+  document.getElementById('quiz-next').className = 'quiz-next-btn show';
+}
+
+function nextQuizQuestion() {
+  quizCurrentIdx++;
+  renderQuizQuestion();
+}
+
+function showQuizComplete() {
+  document.getElementById('quiz-display').innerHTML = `
+    <div style="font-family:'Ma Shan Zheng',cursive;font-size:48px;color:var(--gold);">完成！</div>
+    <div style="font-size:18px;color:var(--ink);margin-top:12px;">Hoàn thành bài kiểm tra!</div>
+  `;
+  document.getElementById('quiz-instruction').textContent = 'Nhấn nút dưới để làm lại';
+  document.getElementById('quiz-options').innerHTML = '';
+  document.getElementById('quiz-result-msg').className = 'quiz-result-msg';
+  const nextBtn = document.getElementById('quiz-next');
+  nextBtn.textContent = '🔄 Làm lại';
+  nextBtn.className = 'quiz-next-btn show';
+  nextBtn.onclick = () => { nextBtn.textContent = 'Câu tiếp theo →'; nextBtn.onclick = nextQuizQuestion; startQuiz(); };
+  celebrate();
+}
+
+// ========== OVERVIEW ==========
+function setOVFilter(f) {
+  ovFilter = f;
+  ['all','new','known'].forEach(x => document.getElementById(`ovf-${x}`).classList.remove('active'));
+  document.getElementById(`ovf-${f}`).classList.add('active');
+  renderVocabOverview();
+}
+
+function renderVocabOverview() {
+  const words = getWords();
+  const el = document.getElementById('vocabOverview');
+  el.innerHTML = '';
+
+  let filtered = words;
+  if (ovFilter === 'new') filtered = words.filter(w => getSRS(w).status === 'new');
+  if (ovFilter === 'known') filtered = words.filter(w => getSRS(w).status === 'known');
+
+  document.getElementById('ov-count').textContent = `${filtered.length} từ`;
+
+  filtered.forEach((w, i) => {
+    const srs = getSRS(w);
+    const dotClass = srs.status === 'known' ? 'dot-known' : srs.status === 'learning' ? 'dot-learning' : 'dot-new';
+    const dotColor = srs.status === 'known' ? 'var(--jade2)' : srs.status === 'learning' ? 'var(--gold)' : 'var(--muted)';
+
+    const card = document.createElement('div');
+    card.className = 'vocab-card fade-in';
+    card.style.animationDelay = (i * 0.03) + 's';
+    card.innerHTML = `
+      <div class="vc-status" style="background:${dotColor};"></div>
+      <div class="vc-hanzi">${w.h}</div>
+      <div class="vc-pinyin">${w.p}</div>
+      <div class="vc-meaning">${w.m}</div>
+    `;
+    card.onclick = () => { updateDetail(w); };
+    el.appendChild(card);
+  });
+}
+
+// ========== STROKE ==========
+function initCanvas() {
+  const canvas = document.getElementById('strokeCanvas');
+  ctx = canvas.getContext('2d');
+  ctx.strokeStyle = '#1a1208';
+  ctx.lineWidth = 4;
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+
+  canvas.addEventListener('mousedown', e => { isDrawing = true; [lastX, lastY] = getPos(e, canvas); });
+  canvas.addEventListener('mousemove', e => { if (!isDrawing) return; draw(e, canvas); });
+  canvas.addEventListener('mouseup', () => isDrawing = false);
+  canvas.addEventListener('mouseleave', () => isDrawing = false);
+
+  canvas.addEventListener('touchstart', e => { e.preventDefault(); isDrawing = true; [lastX, lastY] = getPos(e.touches[0], canvas); }, { passive: false });
+  canvas.addEventListener('touchmove', e => { e.preventDefault(); if (!isDrawing) return; draw(e.touches[0], canvas); }, { passive: false });
+  canvas.addEventListener('touchend', () => isDrawing = false);
+}
+
+function getPos(e, canvas) {
+  const r = canvas.getBoundingClientRect();
+  return [e.clientX - r.left, e.clientY - r.top];
+}
+
+function draw(e, canvas) {
+  const [x, y] = getPos(e, canvas);
+  ctx.beginPath();
+  ctx.moveTo(lastX, lastY);
+  ctx.lineTo(x, y);
+  ctx.stroke();
+  [lastX, lastY] = [x, y];
+}
+
+function clearCanvas() {
+  ctx.clearRect(0, 0, 280, 280);
+}
+
+function updateStrokeView() {
+  const words = getWords();
+  const w = words[strokeWordIdx % words.length];
+  document.getElementById('stroke-hanzi').textContent = w.h;
+  document.getElementById('stroke-pinyin').textContent = w.p;
+  document.getElementById('stroke-meaning').textContent = w.m;
+  document.getElementById('stroke-guide').textContent = w.h[0] || '';
+  document.getElementById('stroke-chars-row').textContent = words.map(x => x.h[0]).join(' ');
+  clearCanvas();
+  updateDetail(w);
+}
+
+function nextStrokeWord() { strokeWordIdx++; updateStrokeView(); }
+function prevStrokeWord() { strokeWordIdx = Math.max(0, strokeWordIdx - 1); updateStrokeView(); }
+
+// ========== DETAIL PANEL ==========
+function updateDetail(w) {
+  if (!w) return;
+  const srs = getSRS(w);
+  document.getElementById('detail-hanzi').textContent = w.h;
+  document.getElementById('detail-pinyin').innerHTML = colorPinyin(w.p);
+  document.getElementById('detail-meaning').textContent = w.m;
+  document.getElementById('detail-type').textContent = w.type || '—';
+  document.getElementById('detail-hsk').textContent = currentHSK;
+  document.getElementById('detail-srs').textContent =
+    srs.status === 'new' ? 'Chưa học' :
+    srs.status === 'learning' ? `Đang học (×${srs.reps})` :
+    `Đã nhớ (ôn sau ${Math.round(srs.interval)} phút)`;
+
+  document.getElementById('detail-example-box').innerHTML = `
+    <div class="ex-zh">${w.ex.zh}</div>
+    <div class="ex-py">${w.ex.py}</div>
+    <div class="ex-vn">${w.ex.vn}</div>
+  `;
+}
+
+function colorPinyin(p) {
+  return p.replace(/([āáǎàa][^\s]*|[ēéěèe][^\s]*|[īíǐìi][^\s]*|[ōóǒòo][^\s]*|[ūúǔùu][^\s]*|[ǖǘǚǜü][^\s]*)/g, m => {
+    const t = getTone(m);
+    return `<span class="tone${t}">${m}</span>`;
+  });
+}
+
+function getTone(s) {
+  if (/[āēīōūǖ]/.test(s)) return 1;
+  if (/[áéíóúǘ]/.test(s)) return 2;
+  if (/[ǎěǐǒǔǚ]/.test(s)) return 3;
+  if (/[àèìòùǜ]/.test(s)) return 4;
+  return 5;
+}
+
+// ========== AUDIO ==========
+function speak() {
+  const hanzi = document.getElementById('detail-hanzi').textContent;
+  if (!hanzi || hanzi === '—') return;
+  const u = new SpeechSynthesisUtterance(hanzi);
+  u.lang = 'zh-CN';
+  u.rate = 0.85;
+  window.speechSynthesis.speak(u);
+  const btn = document.getElementById('audio-btn');
+  btn.textContent = '🔊 Đang phát...';
+  u.onend = () => { btn.textContent = '🔊 Phát âm'; };
+}
+
+// ========== STATS ==========
+function updateStats() {
+  const words = getWords();
+  const known = words.filter(w => getSRS(w).status === 'known').length;
+  const learning = words.filter(w => getSRS(w).status === 'learning').length;
+  const total = words.length;
+
+  document.getElementById('stat-known').textContent = known;
+  document.getElementById('stat-learning').textContent = learning;
+  document.getElementById('stat-streak').textContent = userStats.streak || 0;
+  document.getElementById('stat-total').textContent = total;
+  document.getElementById('hdr-known').textContent = known;
+  document.getElementById('hdr-streak').textContent = userStats.streak || 0;
+  document.getElementById('hdr-score').textContent = userStats.score || 0;
+}
+
+function renderHSKProgress() {
+  const el = document.getElementById('hsk-progress-bars');
+  el.innerHTML = '';
+  const colors = ['#e74c3c','#f39c12','#27ae60','#2980b9','#8e44ad'];
+
+  [1,2,3,4,5].forEach((n, i) => {
+    const words = HSK_DATA[n];
+    const known = words.filter(w => (srsData[`hsk${n}_${w.h}`] || {}).status === 'known').length;
+    const pct = Math.round((known / words.length) * 100);
+
+    const row = document.createElement('div');
+    row.className = 'hsk-bar-row';
+    row.innerHTML = `
+      <div class="h-label">HSK${n}</div>
+      <div class="h-bar"><div class="hsk-bar-fill" style="width:${pct}%;background:${colors[i]};"></div></div>
+      <div class="h-num">${known}/${words.length}</div>
+    `;
+    el.appendChild(row);
+  });
+}
+
+// ========== CELEBRATE ==========
+function celebrate() {
+  const msgs = ['太棒了！', '厉害！', '加油！', '完美！'];
+  const el = document.getElementById('celebrate-msg');
+  el.textContent = msgs[Math.floor(Math.random() * msgs.length)];
+  el.style.display = 'block';
+  el.style.animation = 'none';
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      el.style.animation = 'celebratePop 2s ease forwards';
+      setTimeout(() => { el.style.display = 'none'; }, 2000);
+    });
+  });
+}
+
+// ========== UTILS ==========
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+// ========== KEYBOARD ==========
+document.addEventListener('keydown', e => {
+  if (currentMode === 'flashcard') {
+    if (e.code === 'Space') { e.preventDefault(); if (!cardRevealed) revealCard(); }
+    if (e.code === 'Digit1') rateCard(0);
+    if (e.code === 'Digit2') rateCard(1);
+    if (e.code === 'Digit3') rateCard(2);
+    if (e.code === 'Digit4') rateCard(3);
+  }
+});
+
+// ========== START ==========
+init();
+</script>
+</body>
+</html>
